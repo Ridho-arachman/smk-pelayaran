@@ -83,12 +83,16 @@
                     <div class="card bg-base-100 shadow-xl">
                         <div class="card-body">
                             <h3 class="card-title mb-4">Video Pengantar Materi</h3>
-                            <div class="aspect-video">
-                                <iframe width="560" height="315"
+                            <div class="relative w-full" style="padding-top: 56.25%;">
+                                <iframe 
+                                    class="absolute top-0 left-0 w-full h-full rounded-lg"
                                     src="https://www.youtube.com/embed/RxwP_coJbQY?si=AY5JJcAPUE6LoxLo"
-                                    title="YouTube video player" frameborder="0"
+                                    title="YouTube video player"
+                                    frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen>
+                                </iframe>
                             </div>
                         </div>
                     </div>

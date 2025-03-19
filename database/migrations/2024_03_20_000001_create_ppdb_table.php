@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('previous_school');
-            $table->enum('major', ['nautika', 'teknika']);
+            $table->enum('major', ['nautika', 'teknika', 'manajemen']);
             $table->string('photo');
             $table->string('certificate');
             $table->enum('status', ['pending', 'verified', 'accepted', 'rejected'])->default('pending');

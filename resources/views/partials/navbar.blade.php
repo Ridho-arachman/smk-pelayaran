@@ -11,13 +11,14 @@
                 <li><a href="{{ route('home') }}"
                         class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">Beranda</a></li>
                 <li><a href="{{ route('about') }}"
-                        class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">Tentang Kami</a></li>
+                        class="{{ Route::currentRouteName() === 'about' ? 'bg-slate-500' : '' }}"">Tentang Kami</a></li>
                 <li><a href="{{ route('contact') }}"
-                        class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">Kontak</a></li>
+                        class="{{ Route::currentRouteName() === 'contact' ? 'bg-slate-500' : '' }}"">Kontak</a></li>
                 <li><a href="{{ route('ppdb') }}"
                         class="{{ Route::currentRouteName() === 'ppdb' ? 'bg-slate-500' : '' }}">PPDB</a></li>
                 <li><a href="{{ route('learning') }}"
-                        class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">E-Learning</a></li>
+                        class="{{ Route::currentRouteName() === 'learning' ? 'bg-slate-500' : '' }}"">E-Learning</a>
+                </li>
                 <li><a href="{{ route('library') }}"
                         class="{{ Route::currentRouteName() === 'library' ? 'bg-slate-500' : '' }}"">Perpustakaan</a>
                 </li>

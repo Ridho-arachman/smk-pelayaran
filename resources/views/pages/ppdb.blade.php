@@ -128,6 +128,7 @@
                                     <option value="">Pilih Jurusan</option>
                                     <option value="nautika">Nautika Kapal Niaga</option>
                                     <option value="teknika">Teknika Kapal Niaga</option>
+                                    <option value="manajemen">Manajemen Pelayaran</option>
                                 </select>
                             </div>
                         </div>
