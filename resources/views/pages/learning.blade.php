@@ -23,7 +23,7 @@
                 <!-- Nautika Course -->
                 <div class="card bg-base-100 shadow-xl">
                     <figure class="px-6 pt-6">
-                        <img src="{{ asset('images/learning/nautika.webp') }}" alt="Nautika"
+                        <img src="{{ asset('images/learning/nautikakapalniaga.webp') }}" alt="Nautika"
                             class="rounded-xl h-48 w-full object-cover" />
                     </figure>
                     <div class="card-body">
@@ -41,7 +41,7 @@
                 <!-- Teknika Course -->
                 <div class="card bg-base-100 shadow-xl">
                     <figure class="px-6 pt-6">
-                        <img src="{{ asset('images/learning/teknika.webp') }}" alt="Teknika"
+                        <img src="{{ asset('images/learning/teknikakapalniaga.webp') }}" alt="Teknika"
                             class="rounded-xl h-48 w-full object-cover" />
                     </figure>
                     <div class="card-body">
@@ -59,12 +59,12 @@
                 <!-- Safety Course -->
                 <div class="card bg-base-100 shadow-xl">
                     <figure class="px-6 pt-6">
-                        <img src="{{ asset('images/learning/safety.webp') }}" alt="Safety"
+                        <img src="{{ asset('images/learning/manajemenpelayaran.webp') }}" alt="Safety"
                             class="rounded-xl h-48 w-full object-cover" />
                     </figure>
                     <div class="card-body">
                         <h2 class="card-title">
-                            Keselamatan Pelayaran
+                            Manajemen Pelayaran
                             <div class="badge badge-primary">Kejuruan</div>
                         </h2>
                         <p>Pembelajaran tentang prosedur keselamatan, penyelamatan, dan tanggap darurat.</p>
@@ -97,8 +97,8 @@
                     <div class="card bg-base-100 shadow-xl">
                         <div class="card-body">
                             <h3 class="card-title mb-4">E-Book & Modul</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4 p-4 border rounded-lg">
+                            <div class="flex flex-col justify-center items-center gap-10">
+                                <div class="flex items-center gap-4 p-4 border rounded-lg w-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -109,7 +109,7 @@
                                         <a href="#" class="text-primary">Unduh PDF</a>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-4 p-4 border rounded-lg">
+                                <div class="flex items-center gap-4 p-4 border rounded-lg w-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -117,6 +117,17 @@
                                     </svg>
                                     <div>
                                         <h4 class="font-bold">Modul Teknika Dasar</h4>
+                                        <a href="#" class="text-primary">Unduh PDF</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 border rounded-lg w-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                    <div>
+                                        <h4 class="font-bold">Modul Manajemen Pelayaran Dasar</h4>
                                         <a href="#" class="text-primary">Unduh PDF</a>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-    themes: cupcake --default, dracula --prefersdark;
+    themes: light --default, dracula --prefersdark;
 }
 
 @font-face {

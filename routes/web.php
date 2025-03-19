@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PPDBController;
+use App\Http\Controllers\LibraryController;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -14,3 +16,24 @@ Route::get('/contact', function () {
 Route::get('/learning', function () {
     return view('pages.learning');
 })->name('learning');
+
+// Library Routes
+Route::prefix('library')->group(function () {
+    Route::get('/', function () {
+        $books = app(LibraryController::class)->search(request());
+        return view('pages.library', ['books' => $books]);
+    })->name('library');
+
+    Route::get('/search', [LibraryController::class, 'search'])->name('library.search');
+    Route::post('/store', [LibraryController::class, 'store'])->name('library.store');
+    Route::get('/{library}', [LibraryController::class, 'show'])->name('library.show');
+    Route::put('/{library}', [LibraryController::class, 'update'])->name('library.update');
+    Route::delete('/{library}', [LibraryController::class, 'destroy'])->name('library.destroy');
+});
+
+// Add this with your other routes
+Route::get('/ppdb', function () {
+    return view('pages.ppdb');
+})->name('ppdb');
+
+Route::post('/ppdb/store', [PPDBController::class, 'store'])->name('ppdb.store');

@@ -14,10 +14,13 @@
                         class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">Tentang Kami</a></li>
                 <li><a href="{{ route('contact') }}"
                         class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">Kontak</a></li>
-                <li><a href="#">PPDB</a></li>
+                <li><a href="{{ route('ppdb') }}"
+                        class="{{ Route::currentRouteName() === 'ppdb' ? 'bg-slate-500' : '' }}">PPDB</a></li>
                 <li><a href="{{ route('learning') }}"
                         class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}"">E-Learning</a></li>
-                <li><a href="#">Perpustakaan</a></li>
+                <li><a href="{{ route('library') }}"
+                        class="{{ Route::currentRouteName() === 'library' ? 'bg-slate-500' : '' }}"">Perpustakaan</a>
+                </li>
             </ul>
         </div>
         <a href="/" class="btn btn-ghost normal-case text-xl"><img src={{ asset('favicon-32x32.png') }}
@@ -32,10 +35,12 @@
                     class="{{ Route::currentRouteName() === 'about' ? 'bg-slate-500' : '' }}">Tentang Kami</a></li>
             <li><a href="{{ route('contact') }}"
                     class="{{ Route::currentRouteName() === 'contact' ? 'bg-slate-500' : '' }}">Kontak</a></li>
-            <li><a href="#">PPDB</a></li>
+            <li><a href="{{ route('ppdb') }}"
+                    class="{{ Route::currentRouteName() === 'ppdb' ? 'bg-slate-500' : '' }}">PPDB</a></li>
             <li><a href="{{ route('learning') }}"
                     class="{{ Route::currentRouteName() === 'learning' ? 'bg-slate-500' : '' }}">E-Learning</a></li>
-            <li><a href="#">Perpustakaan</a></li>
+            <li><a href="{{ route('library') }}"
+                    class="{{ Route::currentRouteName() === 'library' ? 'bg-slate-500' : '' }}"">Perpustakaan</a></li>
         </ul>
     </div>
     <div class="navbar-end flex gap-6 justify-end items-center">
@@ -74,7 +79,7 @@
 
     // Add event listener to toggle
     themeToggle.addEventListener('change', function() {
-        const theme = this.checked ? 'dracula' : 'cupcake';
+        const theme = this.checked ? 'dracula' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     });
