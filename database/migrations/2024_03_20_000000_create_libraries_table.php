@@ -16,11 +16,10 @@ return new class extends Migration
             $table->year('publication_year');
             $table->string('isbn')->unique();
             $table->string('category');
-            $table->integer('stock');
-            $table->text('description')->nullable();
-            $table->string('cover_image')->nullable();
+            $table->integer('stock')->default(0);
+            $table->text('description');
+            $table->string('cover_image');
             $table->string('file_path')->nullable();
-            $table->boolean('is_available')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

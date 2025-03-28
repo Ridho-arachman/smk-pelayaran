@@ -19,16 +19,11 @@ Route::get('/learning', function () {
 
 // Library Routes
 Route::prefix('library')->group(function () {
-    Route::get('/', function () {
-        $books = app(LibraryController::class)->search(request());
-        return view('pages.library', ['books' => $books]);
-    })->name('library');
-
-    Route::get('/search', [LibraryController::class, 'search'])->name('library.search');
-    Route::post('/store', [LibraryController::class, 'store'])->name('library.store');
+    Route::get('/', [LibraryController::class, 'index'])->name('library');
+    Route::get('/search', [LibraryController::class, 'index'])->name('library.search');
     Route::get('/{library}', [LibraryController::class, 'show'])->name('library.show');
-    Route::put('/{library}', [LibraryController::class, 'update'])->name('library.update');
-    Route::delete('/{library}', [LibraryController::class, 'destroy'])->name('library.destroy');
+    Route::get('/{library}/read', [LibraryController::class, 'read'])->name('library.read');
+    Route::get('/library/{library}/detail', [LibraryController::class, 'detail'])->name('library.detail');
 });
 
 // Add this with your other routes

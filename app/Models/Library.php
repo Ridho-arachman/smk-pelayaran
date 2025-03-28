@@ -3,13 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Library extends Model
 {
-    use HasFactory, HasUlids, SoftDeletes;
+    use HasUlids, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -17,17 +16,51 @@ class Library extends Model
         'publisher',
         'publication_year',
         'isbn',
+        'description',
         'category',
         'stock',
-        'description',
         'cover_image',
-        'file_path',
-        'is_available',
+        'file_path'
     ];
 
     protected $casts = [
         'publication_year' => 'integer',
-        'stock' => 'integer',
-        'is_available' => 'boolean',
+        'stock' => 'integer'
     ];
+
+    protected static $categories = [
+        'fiction' => 'Fiction',
+        'non-fiction' => 'Non-Fiction',
+        'reference' => 'Reference',
+        'textbook' => 'Textbook',
+        'magazine' => 'Magazine'
+    ];
+
+    public static function getCategories()
+    {
+        return static::$categories;
+    }
+
+    // Add these relationships to your existing Library model
+    public function loans()
+    {
+        return $this->hasMany(BookLoan::class);
+    }
+
+    public function accessLogs()
+    {
+        return $this->hasMany(BookAccessLog::class);
+    }
+
+    public function userAccess()
+    {
+        return $this->hasMany(UserLibrary::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_libraries')
+            ->withPivot('access_expires_at', 'is_active')
+            ->withTimestamps();
+    }
 }

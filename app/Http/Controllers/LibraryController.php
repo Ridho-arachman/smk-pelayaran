@@ -3,148 +3,90 @@
 namespace App\Http\Controllers;
 
 use App\Models\Library;
+use App\Models\UserLibrary;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
+use App\Models\BookAccessLog;
+use Illuminate\Support\Facades\Auth;
 
 class LibraryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $books = Library::latest()->paginate(10);
-        return response()->json($books);
+        $query = Library::query();
+
+        // Search functionality for students
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('author', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by category
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Get all categories with book count
+        $categories = Library::select('category')
+            ->selectRaw('count(*) as book_count')
+            ->groupBy('category')
+            ->pluck('book_count', 'category')
+            ->toArray();
+
+        // Only show available books
+        $books = $query->where('is_available', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('pages.library', compact('books', 'categories'));
     }
 
-    public function store(Request $request)
+    public function read(Library $library)
     {
-        try {
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'author' => 'required|string|max:255',
-                'publisher' => 'required|string|max:255',
-                'publication_year' => 'required|integer|min:1900|max:2024',
-                'isbn' => 'required|string|unique:libraries',
-                'category' => 'required|string',
-                'stock' => 'required|integer|min:0',
-                'description' => 'nullable|string',
-                'cover_image' => 'nullable|image|max:2048',
-                'file_path' => 'nullable|file|mimes:pdf|max:10240',
+        $user = Auth::user();
+
+        if ($library->type === 'digital' && in_array($user->role, ['student', 'teacher'])) {
+            // Auto-create access if not exists
+            UserLibrary::firstOrCreate([
+                'user_id' => $user->id,
+                'library_id' => $library->id,
+            ], [
+                'is_active' => true
             ]);
-
-            if ($request->hasFile('cover_image')) {
-                $validated['cover_image'] = $request->file('cover_image')
-                    ->store('covers', 'public');
-            }
-
-            if ($request->hasFile('file_path')) {
-                $validated['file_path'] = $request->file('file_path')
-                    ->store('books', 'public');
-            }
-
-            $book = Library::create($validated);
-
-            return response()->json([
-                'message' => 'Book created successfully',
-                'data' => $book
-            ], 201);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $e->errors()
-            ], 422);
         }
+
+        // Log student's access
+        BookAccessLog::create([
+            'user_id' => Auth::id(),
+            'library_id' => $library->id,
+            'accessed_at' => now(),
+            'action' => 'view',
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ]);
+
+        // For physical books, show details page
+        if ($library->type === 'physical') {
+            return view('pages.library-detail', compact('library'));
+        }
+
+        // For digital books, serve the file through route
+        return redirect()->route('library.show', $library);
     }
 
     public function show(Library $library)
     {
-        return response()->json($library);
+        if ($library->type === 'physical') {
+            return view('pages.library-detail', compact('library'));
+        }
+
+        return response()->file(storage_path('app/public/' . $library->file_path));
     }
 
-    public function update(Request $request, Library $library)
+    public function detail(Library $library)
     {
-        try {
-            $validated = $request->validate([
-                'title' => 'sometimes|string|max:255',
-                'author' => 'sometimes|string|max:255',
-                'publisher' => 'sometimes|string|max:255',
-                'publication_year' => 'sometimes|integer|min:1900|max:2024',
-                'isbn' => 'sometimes|string|unique:libraries,isbn,' . $library->id,
-                'category' => 'sometimes|string',
-                'stock' => 'sometimes|integer|min:0',
-                'description' => 'nullable|string',
-                'cover_image' => 'nullable|image|max:2048',
-                'file_path' => 'nullable|file|mimes:pdf|max:10240',
-            ]);
-
-            if ($request->hasFile('cover_image')) {
-                if ($library->cover_image) {
-                    Storage::disk('public')->delete($library->cover_image);
-                }
-                $validated['cover_image'] = $request->file('cover_image')
-                    ->store('covers', 'public');
-            }
-
-            if ($request->hasFile('file_path')) {
-                if ($library->file_path) {
-                    Storage::disk('public')->delete($library->file_path);
-                }
-                $validated['file_path'] = $request->file('file_path')
-                    ->store('books', 'public');
-            }
-
-            $library->update($validated);
-
-            return response()->json([
-                'message' => 'Book updated successfully',
-                'data' => $library
-            ]);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $e->errors()
-            ], 422);
-        }
-    }
-
-    public function destroy(Library $library)
-    {
-        if ($library->cover_image) {
-            Storage::disk('public')->delete($library->cover_image);
-        }
-        if ($library->file_path) {
-            Storage::disk('public')->delete($library->file_path);
-        }
-        
-        $library->delete();
-
-        return response()->json([
-            'message' => 'Book deleted successfully'
-        ]);
-    }
-
-    public function search(Request $request)
-    {
-        $query = Library::query();
-
-        if ($request->has('search')) {
-            $searchTerm = $request->search;
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('title', 'like', "%{$searchTerm}%")
-                    ->orWhere('author', 'like', "%{$searchTerm}%")
-                    ->orWhere('isbn', 'like', "%{$searchTerm}%");
-            });
-        }
-
-        if ($request->has('category') && $request->category !== '') {
-            $query->where('category', $request->category);
-        }
-
-        $books = $query->latest()->paginate(12)->withQueryString();
-        
-        if ($request->wantsJson()) {
-            return response()->json($books);
-        }
-        
-        return $books;
+        return view('pages.library-detail', compact('library'));
     }
 }

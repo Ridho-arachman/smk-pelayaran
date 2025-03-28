@@ -1,3 +1,7 @@
+@php
+    use App\Models\Library;
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Perpustakaan')
@@ -29,9 +33,9 @@
                             <div class="form-control w-full md:w-48">
                                 <select name="category" class="select select-bordered w-full">
                                     <option value="">Semua Kategori</option>
-                                    @foreach(['nautika', 'teknika', 'manajemen'] as $category)
-                                        <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
-                                            {{ ucfirst($category) }}
+                                    @foreach(Library::getCategories() as $value => $label)
+                                        <option value="{{ $value }}" {{ request('category') == $value ? 'selected' : '' }}>
+                                            {{ $label }} ({{ $categories[$value] ?? 'Tidak ada buku' }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -60,34 +64,22 @@
                         <div class="card-body">
                             <h2 class="card-title text-lg font-bold line-clamp-2">{{ $book->title }}</h2>
                             <p class="text-sm text-gray-500">Oleh {{ $book->author }}</p>
-                            <div class="badge badge-primary">{{ ucfirst($book->category) }}</div>
+                            <div class="badge badge-primary">{{ Library::getCategories()[$book->category] ?? $book->category }}</div>
                             <p class="mt-2 text-sm line-clamp-3">{{ $book->description }}</p>
-                            <div class="card-actions justify-between items-center mt-4">
-                                <div class="text-sm">
-                                    <p>Stok: <span class="font-semibold">{{ $book->stock }}</span></p>
-                                    <p class="text-gray-500 text-xs">ISBN: {{ $book->isbn }}</p>
-                                </div>
-                                @if($book->file_path && $book->is_available)
-                                    <a href="{{ Storage::url($book->file_path) }}" 
-                                        target="_blank" 
-                                        class="btn btn-primary btn-sm hover:scale-105 transition-transform duration-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                        </svg>
-                                        Baca Buku
-                                    </a>
-                                @endif
+                            <div class="card-actions justify-end mt-4">
+                                <a href="{{ route('library.detail', $book) }}" 
+                                    class="btn btn-primary btn-sm hover:scale-105 transition-transform duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    Lihat Detail
+                                </a>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full text-center py-12">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        <h3 class="text-xl font-semibold">Tidak ada buku ditemukan</h3>
-                        <p class="text-gray-500 mt-2">Coba ubah kriteria pencarian Anda</p>
-                    </div>
+                    <!-- Empty state remains the same -->
                 @endforelse
             </div>
 

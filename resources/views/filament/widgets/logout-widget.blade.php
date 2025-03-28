@@ -1,0 +1,9 @@
+<x-filament-widgets::widget>
+    <x-filament::button
+        wire:click="logout"
+        color="danger"
+        icon="heroicon-m-arrow-left-on-rectangle"
+    >
+        Logout
+    </x-filament::button>
+</x-filament-widgets::widget>
