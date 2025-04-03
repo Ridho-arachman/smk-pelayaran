@@ -11,23 +11,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    use HasFactory, Notifiable, SoftDeletes, HasUlids;
-
-    // public function canAccessPanel(Panel $panel): bool
-    // {
-    //     return $this->role === 'admin';
-    // }
+    use HasUlids, Notifiable, SoftDeletes, HasFactory;
 
     protected $fillable = [
-        'id',
         'name',
         'email',
         'password',
         'role',
-        'nip',
-        'nisn'
+        'gender',
+        'is_active'
     ];
 
     protected $hidden = [
@@ -38,32 +32,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_active' => 'boolean',
     ];
 
-
-
-    public function hasRole($role)
+    public function student()
     {
-        return $this->role === $role;
+        return $this->hasOne(Student::class);
     }
 
-    protected static function boot()
+    public function teacher()
     {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if ($model->role === 'student') {
-                $model->id = $model->nisn;
-            } elseif ($model->role === 'teacher') {
-                $model->id = $model->nip;
-            } else {
-                $model->id = (string) Str::ulid();
-            }
-        });
+        return $this->hasOne(Teacher::class);
     }
 
-    public function bookLoans()
+    public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasMany(BookLoan::class);
+        return $this->role === 'admin';
     }
 }

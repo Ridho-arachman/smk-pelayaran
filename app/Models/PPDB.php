@@ -2,39 +2,85 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
 
 class PPDB extends Model
 {
-    use HasFactory, HasUlids, SoftDeletes;
+    use HasUlids, SoftDeletes, Notifiable;
 
     protected $table = 'ppdb';
 
     protected $fillable = [
-        'full_name',
-        'nisn',
-        'birth_place',
-        'birth_date',
+        'name',
         'email',
         'phone',
+        'birth_date',
+        'birth_place',
+        'gender',
         'previous_school',
-        'major',
-        'photo',
-        'certificate',
+        'parent_name',
+        'parent_phone',
+        'address',
         'status',
-        'notes'
+        'registration_number',
+        'documents',
+        'nisn'
     ];
 
     protected $casts = [
         'birth_date' => 'date',
-        'status' => 'string'
+        'documents' => 'array',
+        'status' => 'string',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->registration_number = 'PPDB-' . date('Y') . '-' . str_pad(static::count() + 1, 4, '0', STR_PAD_LEFT);
+            $model->status = 'pending';
+        });
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
+
+    public function createStudentAccount(): void
+    {
+        // Find existing user or create new one
+        $user = User::updateOrCreate(
+            ['email' => $this->email],
+            [
+                'name' => $this->name,
+                'password' => Hash::make('password'),
+                'role' => 'student',
+                'gender' => $this->gender,
+                'is_active' => true,
+            ]
+        );
+
+        // Create student record if doesn't exist
+        Student::firstOrCreate(
+            ['nisn' => $this->nisn],
+            [
+                'user_id' => $user->id,
+                'nis' => 'S' . date('Y') . str_pad(Student::count() + 1, 4, '0', STR_PAD_LEFT),
+            ]
+        );
+
+        // Update PPDB status
+        $this->update(['status' => 'accepted']);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'nisn', 'nisn');
     }
 }

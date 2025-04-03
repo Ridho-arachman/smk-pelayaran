@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\PPDB;
+use App\Observers\PPDBObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        PPDB::observe(PPDBObserver::class);
     }
 }

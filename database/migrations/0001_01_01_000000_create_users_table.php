@@ -15,12 +15,11 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'teacher', 'student'])->default('student');
-            $table->string('nip')->nullable()->unique();  // For teachers
-            $table->string('nisn')->nullable()->unique(); // For students
+            $table->enum('role', ['admin', 'teacher', 'student']);
+            $table->enum('gender', ['male', 'female']);
             $table->boolean('is_active')->default(true);
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

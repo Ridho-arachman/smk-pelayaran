@@ -27,8 +27,10 @@ Route::prefix('library')->group(function () {
 });
 
 // Add this with your other routes
-Route::get('/ppdb', function () {
-    return view('pages.ppdb');
-})->name('ppdb');
-
-Route::post('/ppdb/store', [PPDBController::class, 'store'])->name('ppdb.store');
+// PPDB Routes
+Route::prefix('ppdb')->group(function () {
+    Route::get('/', [PPDBController::class, 'index'])->name('ppdb');
+    Route::post('/store', [PPDBController::class, 'store'])->name('ppdb.store');
+    Route::post('/check', [PPDBController::class, 'check'])->name('ppdb.check');
+    Route::get('/status', [PPDBController::class, 'status'])->name('ppdb.status');
+});

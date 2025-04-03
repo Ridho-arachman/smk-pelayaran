@@ -54,6 +54,29 @@
                 </div>
             </div>
 
+            <!-- Add this after the information cards -->
+            @if (session('success'))
+                <div class="alert alert-success mb-6">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-error mb-6">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-error mb-6">
+                    <ul class="list-disc list-inside">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <!-- Registration Form -->
             <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
@@ -67,33 +90,15 @@
                                     <span class="label-text">Nama Lengkap</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
-                                <input type="text" name="full_name" class="input input-bordered" required>
+                                <input type="text" name="name" class="input input-bordered" required>
                             </div>
                             <div class="form-control">
                                 <label class="label">
                                     <span class="label-text">NISN</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
-                                <input type="text" name="nisn" class="input input-bordered" required>
+                                <input type="text" name="nisn" maxlength="10" class="input input-bordered" required>
                             </div>
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">Tempat Lahir</span>
-                                    <span class="label-text-alt text-error">*</span>
-                                </label>
-                                <input type="text" name="birth_place" class="input input-bordered" required>
-                            </div>
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">Tanggal Lahir</span>
-                                    <span class="label-text-alt text-error">*</span>
-                                </label>
-                                <input type="date" name="birth_date" class="input input-bordered" required>
-                            </div>
-                        </div>
-
-                        <!-- Contact Information -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-control">
                                 <label class="label">
                                     <span class="label-text">Email</span>
@@ -110,8 +115,37 @@
                             </div>
                         </div>
 
-                        <!-- School Information -->
+                        <!-- Birth Information -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Tempat Lahir</span>
+                                    <span class="label-text-alt text-error">*</span>
+                                </label>
+                                <input type="text" name="birth_place" class="input input-bordered" required>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Tanggal Lahir</span>
+                                    <span class="label-text-alt text-error">*</span>
+                                </label>
+                                <input type="date" name="birth_date" class="input input-bordered" required>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Jenis Kelamin</span>
+                                    <span class="label-text-alt text-error">*</span>
+                                </label>
+                                <select name="gender" class="select select-bordered" required>
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="male">Laki-laki</option>
+                                    <option value="female">Perempuan</option>
+                                </select>
+                            </div>
                             <div class="form-control">
                                 <label class="label">
                                     <span class="label-text">Asal Sekolah</span>
@@ -119,40 +153,77 @@
                                 </label>
                                 <input type="text" name="previous_school" class="input input-bordered" required>
                             </div>
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">Jurusan yang Dipilih</span>
-                                    <span class="label-text-alt text-error">*</span>
-                                </label>
-                                <select name="major" class="select select-bordered" required>
-                                    <option value="">Pilih Jurusan</option>
-                                    <option value="nautika">Nautika Kapal Niaga</option>
-                                    <option value="teknika">Teknika Kapal Niaga</option>
-                                    <option value="manajemen">Manajemen Pelayaran</option>
-                                </select>
-                            </div>
                         </div>
 
-                        <!-- Documents Upload -->
+                        <!-- Parent Information -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="form-control">
                                 <label class="label">
-                                    <span class="label-text">Foto (3x4)</span>
+                                    <span class="label-text">Nama Orang Tua</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
-                                <input type="file" name="photo" class="file-input file-input-bordered" accept="image/*" required>
+                                <input type="text" name="parent_name" class="input input-bordered" required>
                             </div>
                             <div class="form-control">
                                 <label class="label">
-                                    <span class="label-text">Ijazah/SKL</span>
+                                    <span class="label-text">No. Telepon Orang Tua</span>
                                     <span class="label-text-alt text-error">*</span>
                                 </label>
-                                <input type="file" name="certificate" class="file-input file-input-bordered" accept=".pdf" required>
+                                <input type="tel" name="parent_phone" class="input input-bordered" required>
                             </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Alamat Lengkap</span>
+                                <span class="label-text-alt text-error">*</span>
+                            </label>
+                            <textarea name="address" class="textarea textarea-bordered" rows="3" required></textarea>
+                        </div>
+
+                        <!-- Documents Upload -->
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Dokumen Pendukung</span>
+                                <span class="label-text-alt text-error">*</span>
+                            </label>
+                            <input type="file" name="documents[]" class="file-input file-input-bordered" multiple required>
+                            <label class="label">
+                                <span class="label-text-alt">Upload foto, scan ijazah/SKL, dan dokumen pendukung lainnya</span>
+                            </label>
                         </div>
 
                         <div class="form-control mt-6">
                             <button type="submit" class="btn btn-primary">Daftar Sekarang</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add this after the registration form -->
+            <div class="card bg-base-100 shadow-xl mt-8">
+                <div class="card-body">
+                    <h2 class="card-title text-2xl mb-6">Cek Status Pendaftaran</h2>
+                    <!-- In your status check form -->
+                    <form action="{{ route('ppdb.check') }}" method="POST" class="space-y-6">
+                        @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">NISN</span>
+                                </label>
+                                <input type="text" name="nisn" maxlength="10" class="input input-bordered" required>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Email</span>
+                                </label>
+                                <input type="email" name="email" class="input input-bordered" required>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <button type="submit" class="btn btn-secondary">Cek Status</button>
                         </div>
                     </form>
                 </div>

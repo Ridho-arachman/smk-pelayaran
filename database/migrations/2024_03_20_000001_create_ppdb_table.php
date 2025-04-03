@@ -10,18 +10,22 @@ return new class extends Migration
     {
         Schema::create('ppdb', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('full_name');
-            $table->string('nisn')->unique();
-            $table->string('birth_place');
-            $table->date('birth_date');
+            $table->string('registration_number')->unique();
+            $table->string('nisn', 10)->unique();
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
+            $table->date('birth_date');
+            $table->string('birth_place');
+            $table->enum('gender', ['male', 'female']);
             $table->string('previous_school');
-            $table->enum('major', ['nautika', 'teknika', 'manajemen']);
-            $table->string('photo');
-            $table->string('certificate');
-            $table->enum('status', ['pending', 'verified', 'accepted', 'rejected'])->default('pending');
+            $table->string('parent_name');
+            $table->string('parent_phone');
+            $table->text('address');
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->json('documents')->nullable();
             $table->text('notes')->nullable();
+            $table->timestamp('reviewed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
