@@ -2,35 +2,26 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model
 {
-    use SoftDeletes, HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'nisn';
     protected $keyType = 'string';
     public $incrementing = false;
 
     protected $fillable = [
-        'user_id',
+        'nisn',
         'nis',
-        'nisn'
+        'user_id',
     ];
 
-    protected static function booted(): void
+    public function user()
     {
-        static::deleting(function ($student) {
-            $student->user->delete();
-        });
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class)->where('role', 'student');
+        return $this->belongsTo(User::class);
     }
 }

@@ -1,2 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin
+Disallow: /filament
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://your-domain.com/sitemap.xml

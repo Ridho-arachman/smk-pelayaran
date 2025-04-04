@@ -20,5 +20,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         PPDB::observe(PPDBObserver::class);
+        
+        view()->composer('partials.footer', function ($view) {
+            $view->with('footerCourses', \App\Models\Course::where('is_published', true)->get());
+        });
     }
 }

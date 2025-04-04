@@ -12,7 +12,7 @@
             <div class="max-w-md">
                 <h1 class="mb-5 text-5xl font-bold">SMK Pelayaran</h1>
                 <p class="mb-5">Membentuk Generasi Pelaut Profesional untuk Masa Depan Maritim Indonesia</p>
-                <button class="btn btn-primary">Daftar Sekarang</button>
+                <a class="btn btn-primary" href="{{ route('ppdb') }}">Daftar Sekarang</a>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
                     <p>Daftar sekarang dan jadilah bagian dari generasi pelaut profesional Indonesia.</p>
                     <div class="card-actions justify-end">
                         <a href="/contact" class="btn">Hubungi Kami</a>
-                        <button class="btn btn-secondary">Daftar Sekarang</button>
+                        <a href="{{ route('ppdb') }}" class="btn btn-secondary">Daftar Sekarang</a>
                     </div>
                 </div>
             </div>
