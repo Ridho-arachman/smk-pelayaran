@@ -165,10 +165,11 @@ php artisan serve
     └── views/
 ```
 
-````
-
 ## Panduan Penggunaan
+
 ### Admin Panel
+
+```
 1. Akses /admin
 2. Navigasi ke PPDB Applications
 3. Fitur tersedia:
@@ -176,33 +177,48 @@ php artisan serve
    - Update status
    - Kirim notifikasi
    - Download dokumen
+```
+
 ### Guru Panel
+
+```
 1. Akses /teacher
 2. Kelola kelas dan materi
 3. Monitor progress siswa
+```
+
 ### Siswa
+
 1. Akses homepage
 2. Daftar PPDB
 3. Akses pembelajaran
+
+```
 ## Keamanan
 - CSRF Protection
 - Form validation
 - File upload validation
 - Role-based access
 - Rate limiting
+```
+
 ## Maintenance
-- Regular backup
-- Log monitoring
-- Performance optimization
+
+-   Regular backup
+-   Log monitoring
+-   Performance optimization
+
+```
 ## Support
 Email: support@smkpelayaran.sch.id
+```
 
 ## License
+
 MIT License
 
-```plaintext
-
 This README provides:
+
 1. Detailed PPDB system documentation
 2. Complete installation guide
 3. Project structure
@@ -211,8 +227,8 @@ This README provides:
 6. Maintenance guidelines
 
 Remember to:
-- Update repository URL
-- Customize contact information
-- Add specific configuration requirements
-- Update features as implemented
-````
+
+-   Update repository URL
+-   Customize contact information
+-   Add specific configuration requirements
+-   Update features as implemented
