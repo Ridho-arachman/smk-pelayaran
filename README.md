@@ -189,32 +189,40 @@ php artisan serve
 
 ### Siswa
 
+```
 1. Akses homepage
 2. Daftar PPDB
 3. Akses pembelajaran
+```
+
+## Keamanan
 
 ```
-## Keamanan
-- CSRF Protection
-- Form validation
-- File upload validation
-- Role-based access
-- Rate limiting
+-   CSRF Protection
+-   Form validation
+-   File upload validation
+-   Role-based access
+-   Rate limiting
 ```
 
 ## Maintenance
 
+```
 -   Regular backup
 -   Log monitoring
 -   Performance optimization
+```
+
+## Support
 
 ```
-## Support
 Email: support@smkpelayaran.sch.id
+Phone: +62 812 3456 7890
 ```
 
 ## License
 
+```
 MIT License
 
 This README provides:
@@ -232,3 +240,4 @@ Remember to:
 -   Customize contact information
 -   Add specific configuration requirements
 -   Update features as implemented
+```
