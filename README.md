@@ -94,8 +94,6 @@ git clone https://github.com/yourusername/smk-pelayaran.git
 cd smk-pelayaran
 ```
 
-````
-
 2. Install dependensi
 ```bash
 composer install
