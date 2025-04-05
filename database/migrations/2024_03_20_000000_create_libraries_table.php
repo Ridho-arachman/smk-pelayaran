@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('publisher');
             $table->year('publication_year');
             $table->string('isbn')->unique();
+            $table->boolean('is_available')->default(false);
             $table->string('category');
             $table->integer('stock')->default(0);
             $table->text('description');

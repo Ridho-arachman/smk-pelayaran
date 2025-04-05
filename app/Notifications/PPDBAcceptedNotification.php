@@ -15,6 +15,11 @@ class PPDBAcceptedNotification extends Notification
     {
     }
 
+    public function getPpdb()
+    {
+        return $this->ppdb;
+    }
+
     public function via(): array
     {
         return ['mail'];
