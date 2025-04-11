@@ -2,15 +2,17 @@
 
 namespace App\Filament\TeacherPanel\Resources;
 
-use App\Filament\TeacherPanel\Resources\LessonResource\Pages;
-use App\Models\Lesson;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Lesson;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+
+use App\Filament\TeacherPanel\Resources\LessonResource\Pages;
+use App\Filament\TeacherPanel\Resources\LessonResource\RelationManagers\CoursesRelationManager;
 
 class LessonResource extends Resource
 {
@@ -36,8 +38,11 @@ class LessonResource extends Resource
                     Forms\Components\Textarea::make('description')
                         ->maxLength(65535)
                         ->columnSpanFull(),
-                    Forms\Components\Hidden::make('course_id')
-                        ->required(),
+                    Forms\Components\Select::make('course_id')
+                        ->relationship('course', 'title')
+                        ->required()
+                        ->preload()
+                        ->searchable(),
                     Forms\Components\TextInput::make('order')
                         ->numeric()
                         ->default(0),
@@ -81,7 +86,7 @@ class LessonResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('materials')
-                    ->url(fn (Lesson $record): string => route('filament.teacherPanel.resources.materials.index', ['lesson' => $record->id]))
+                    ->url(fn(Lesson $record): string => route('filament.teacherPanel.resources.materials.index', ['lesson' => $record->id]))
                     ->icon('heroicon-o-document-text'),
             ])
             ->bulkActions([
@@ -94,7 +99,7 @@ class LessonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CoursesRelationManager::class,
         ];
     }
 
@@ -110,7 +115,7 @@ class LessonResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
-        
+
         // Filter by course_id if it's in the request
         if (request()->has('course')) {
             $query->where('course_id', request()->course);
@@ -123,7 +128,7 @@ class LessonResource extends Resource
                 });
             }
         }
-        
+
         return $query;
     }
 

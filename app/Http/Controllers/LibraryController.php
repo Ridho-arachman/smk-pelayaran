@@ -36,7 +36,7 @@ class LibraryController extends Controller
             ->toArray();
 
         // Only show available books
-        $books = $query->where('is_available', true)
+        $books = $query
             ->orderBy('created_at', 'desc')
             ->paginate(12);
 

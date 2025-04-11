@@ -71,7 +71,7 @@ class LibraryResource extends Resource
             Tables\Columns\TextColumn::make('author')
                 ->searchable(),
             Tables\Columns\TextColumn::make('category')
-                ->formatStateUsing(fn (string $state): string => Library::getCategories()[$state] ?? $state),
+                ->formatStateUsing(fn(string $state): string => Library::getCategories()[$state] ?? $state),
             Tables\Columns\TextColumn::make('stock')
                 ->sortable(),
             Tables\Columns\IconColumn::make('file_path')
