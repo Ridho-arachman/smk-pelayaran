@@ -13,21 +13,10 @@
                 </div>
                 <div class="w-full md:w-1/3">
                     <div class="card bg-base-100 shadow-xl">
-                        <div class="card-body">
-                            <h3 class="card-title">Progress Kelas</h3>
-                            <div class="flex flex-col gap-4">
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span>Materi</span>
-                                        <span>{{ $completedLessons }}/{{ $totalLessons }}</span>
-                                    </div>
-                                    <progress class="progress progress-primary"
-                                        value="{{ $totalLessons ? ($completedLessons / $totalLessons) * 100 : 0 }}"
-                                        max="100">
-                                    </progress>
-                                </div>
-                            </div>
-                        </div>
+                        <figure>
+                            <img src="{{ $course->thumbnail ? Storage::url($course->thumbnail) : asset('images/default-course.jpg') }}"
+                                alt="{{ $course->title }}" class="rounded-xl" />
+                        </figure>
                     </div>
                 </div>
             </div>

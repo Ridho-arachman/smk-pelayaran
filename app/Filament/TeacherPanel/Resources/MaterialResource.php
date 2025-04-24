@@ -35,29 +35,23 @@ class MaterialResource extends Resource
             Forms\Components\TextInput::make('title')
                 ->required()
                 ->maxLength(255),
-            Forms\Components\Textarea::make('description')
-                ->maxLength(65535)
-                ->columnSpanFull(),
             Forms\Components\Select::make('type')
                 ->options([
                     'document' => 'Document',
-                    'video' => 'Video Link',
-                    'link' => 'External Link',
+                    'video' => 'Video URL',
+                    'link' => 'External URL',
                 ])
                 ->required()
                 ->reactive(),
-            Forms\Components\FileUpload::make('file_path')
-                ->label('Document')
-                ->visible(fn(callable $get) => $get('type') === 'document')
-                ->directory('materials'),
-            Forms\Components\TextInput::make('video_url')
-                ->label('Video URL')
-                ->visible(fn(callable $get) => $get('type') === 'video')
-                ->url(),
-            Forms\Components\TextInput::make('external_url')
-                ->label('External Link')
-                ->visible(fn(callable $get) => $get('type') === 'link')
-                ->url(),
+            Forms\Components\TextInput::make('file_path')
+                ->label("URL")
+                ->visible(fn(callable $get) => $get('type') === 'video' || $get('type') === 'link'),
+            Forms\Components\FileUpload::make("file_path")
+                ->label('Upload Document')
+                ->visible(fn($get) => $get('type') === 'document')
+                ->acceptedFileTypes(['application/pdf', 'application/msword'])
+                ->maxSize(50000)
+
         ]);
     }
 
@@ -96,13 +90,13 @@ class MaterialResource extends Resource
     {
         $query = parent::getEloquentQuery();
         $user = Auth::user();
-        
+
         if ($user && $user->teacher) {
             return $query->whereHas('lesson.course', function (Builder $query) use ($user) {
                 $query->where('teacher_id', $user->teacher->nip);
             });
         }
-        
+
         return $query;
     }
 
