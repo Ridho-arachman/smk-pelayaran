@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,13 +26,15 @@
     <meta name="twitter:image" content="{{ $metadata['og_image'] ?? asset('images/logo.png') }}">
 
     <!-- Existing head content -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="https://smk-pelayaran-production.up.railway.app/build/assets/app-BOfM0q7f.css">
 </head>
 
 <body>
     @include('partials.navbar')
     @yield('content')
     @include('partials.footer')
+    <script src="https://smk-pelayaran-production.up.railway.app/build/assets/app-DspuE8pW.js" defer></script>
 </body>
 
 </html>
