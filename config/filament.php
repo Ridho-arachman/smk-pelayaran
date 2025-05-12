@@ -57,6 +57,9 @@ return [
 
     'assets_path' => null,
 
+    // Add this new configuration
+    'asset_url' => env('ASSET_URL', 'https://smk-pelayaran-production.up.railway.app'),
+
     /*
     |--------------------------------------------------------------------------
     | Cache Path
