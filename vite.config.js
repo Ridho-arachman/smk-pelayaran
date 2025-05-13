@@ -14,10 +14,4 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    server: {
-        host: "0.0.0.0",
-        hmr: {
-            host: "kc0z50m3-8000.asse.devtunnels.ms", // ← Ganti dengan domain DevTunnel kamu
-        },
-    },
 });

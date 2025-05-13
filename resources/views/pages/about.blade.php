@@ -15,7 +15,7 @@
     </div>
 
     <!-- Visi Misi Section -->
-    <section class="relative w-full py-16 bg-base-100">
+    <section id="visi-misi" class="relative w-full py-16 bg-base-100">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="card bg-primary text-primary-content">
@@ -41,7 +41,7 @@
     </section>
 
     <!-- Sejarah Section -->
-    <section class="relative w-full py-16 bg-base-200">
+    <section id="sejarah" class="relative w-full py-16 bg-base-200">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Sejarah Kami</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -67,7 +67,7 @@
     </section>
 
     <!-- Tim Pengajar Section -->
-    <section class="relative w-full py-16 bg-base-100">
+    <section id="tim-pengajar" class="relative w-full py-16 bg-base-100">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">Tim Pengajar</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

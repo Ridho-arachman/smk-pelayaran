@@ -10,8 +10,23 @@
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                 <li><a href="{{ route('home') }}"
                         class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}">Beranda</a></li>
-                <li><a href="{{ route('about') }}"
-                        class="{{ Route::currentRouteName() === 'about' ? 'bg-slate-500' : '' }}">Tentang Kami</a></li>
+                
+                <li>
+                    <a class="{{ Route::currentRouteName() === 'about' ? 'bg-slate-500' : '' }}">
+                        Tentang Kami
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <ul class="p-2 bg-base-100 z-[2]">
+                        <li><a href="{{ route('about') }}">Profil Sekolah</a></li>
+                        <li><a href="{{ route('about') }}#visi-misi">Visi & Misi</a></li>
+                        <li><a href="{{ route('about') }}#sejarah">Sejarah</a></li>
+                        <li><a href="{{ route('about') }}#tim-pengajar">Tim Pengajar</a></li>
+                    </ul>
+                </li>
+                
                 <li><a href="{{ route('contact') }}"
                         class="{{ Route::currentRouteName() === 'contact' ? 'bg-slate-500' : '' }}">Kontak</a></li>
                 <li><a href="{{ route('ppdb') }}"
@@ -33,8 +48,19 @@
         <ul class="menu menu-horizontal px-1">
             <li><a href="{{ route('home') }}"
                     class="{{ Route::currentRouteName() === 'home' ? 'bg-slate-500' : '' }}">Beranda</a></li>
-            <li><a href="{{ route('about') }}"
-                    class="{{ Route::currentRouteName() === 'about' ? 'bg-slate-500' : '' }}">Tentang Kami</a></li>
+            
+            <li>
+                <details>
+                    <summary class="{{ Route::currentRouteName() === 'about' ? 'bg-slate-500' : '' }}">Tentang Kami</summary>
+                    <ul class="p-2 bg-base-100 z-[2]">
+                        <li><a href="{{ route('about') }}">Profil Sekolah</a></li>
+                        <li><a href="{{ route('about') }}#visi-misi">Visi & Misi</a></li>
+                        <li><a href="{{ route('about') }}#sejarah">Sejarah</a></li>
+                        <li><a href="{{ route('about') }}#tim-pengajar">Tim Pengajar</a></li>
+                    </ul>
+                </details>
+            </li>
+            
             <li><a href="{{ route('contact') }}"
                     class="{{ Route::currentRouteName() === 'contact' ? 'bg-slate-500' : '' }}">Kontak</a></li>
             <li><a href="{{ route('ppdb') }}"
