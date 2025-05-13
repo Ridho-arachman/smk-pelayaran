@@ -27,7 +27,7 @@
 
     <!-- Existing head content -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="https://smk-pelayaran-production.up.railway.app/build/assets/app-Bd_gfmWG.css">
+    <link rel="stylesheet" href="https://smk-pelayaran-production.up.railway.app/build/assets/app-DGgEBPbk.css">
 </head>
 
 <body>
